@@ -2,12 +2,12 @@
 #include <unistd.h>
 
 /**
- * _printf - Produces output according to a format.
- * @format: The format string.
- * @...: Additional arguments based on format specifiers.
- *
- * Return: The number of characters printed.
- */
+ *  * _printf - Produces output according to a format.
+ *   * @format: The format string.
+ *    * @...: Additional arguments based on format specifiers.
+ *     *
+ *      * Return: The number of characters printed.
+ *       */
 int _printf(const char *format, ...)
 {
 	va_list args;
@@ -25,19 +25,23 @@ int _printf(const char *format, ...)
 			{
 				case 'c':
 					/* Print a character */
-					int c = va_arg(args, int);
-					write(1, &c, 1);
-					count++;
+					{
+						int c = va_arg(args, int);
+						write(1, &c, 1);
+						count++;
+					}
 					break;
 
 				case 's':
 					/* Print a string */
-					str_arg = va_arg(args, char *);
-					while (*str_arg)
 					{
-						write(1, str_arg, 1);
-						str_arg++;
-						count++;
+						str_arg = va_arg(args, char *);
+						while (*str_arg)
+						{
+							write(1, str_arg, 1);
+							str_arg++;
+							count++;
+						}
 					}
 					break;
 
@@ -64,5 +68,5 @@ int _printf(const char *format, ...)
 
 	va_end(args);
 
-	return count;
+	return (count);
 }
