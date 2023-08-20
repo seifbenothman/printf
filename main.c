@@ -1,20 +1,41 @@
 #include "main.h"
-#include <unistd.h>
 
 /**
- *  * _printf - Produces output according to a format.
- *   * @format: The format string.
- *    * @...: Additional arguments based on format specifiers.
- *     *
- *      * Return: The number of characters printed.
- *       */
-int _printf(const char *format, ...)
+ * print_char - Print a character to the standard output
+ * @c: The character to be printed
+ * Return: The number of characters printed
+ */
+int print_char(char c)
 {
-	va_list args;
-	int count = 0;
-	char *str_arg;
+	return (write(1, &c, 1));
+}
 
-	va_start(args, format);
+/**
+ * print_string - Print a string to the standard output
+ * @str: The string to be printed
+ * Return: The number of characters printed
+ */
+int print_string(char *str)
+{
+	int count = 0;
+
+	while (*str)
+	{
+		count += write(1, str, 1);
+		str++;
+	}
+
+	return (count);
+}
+
+/**
+ * count_format - Count the number of characters to be printed for a format
+ * @format: The format string
+ * Return: The number of characters to be printed
+ */
+int count_format(const char *format)
+{
+	int count = 0;
 
 	while (*format)
 	{
@@ -23,48 +44,51 @@ int _printf(const char *format, ...)
 			format++;
 			switch (*format)
 			{
-				case 'c':
-					/* Print a character */
-					{
-						int c = va_arg(args, int);
-						write(1, &c, 1);
-						count++;
-					}
-					break;
+			case 'c':
+			/* Print a character */
+			count++;
+			break;
 
-				case 's':
-					/* Print a string */
-					{
-						str_arg = va_arg(args, char *);
-						while (*str_arg)
-						{
-							write(1, str_arg, 1);
-							str_arg++;
-							count++;
-						}
-					}
-					break;
+			case 's':
+			/* Print a string */
+			count += print_string(va_arg(args, char *));
+			break;
 
-				case '%':
-					/* Print a '%' character */
-					write(1, format, 1);
-					count++;
-					break;
+			case '%':
+			/* Print a '%' character */
+			count++;
+			break;
 
-				default:
-					/* Ignore unsupported format specifiers */
-					break;
+			default:
+			/* Ignore unsupported format specifiers */
+			break;
 			}
 		}
 		else
 		{
 			/* Print ordinary characters */
-			write(1, format, 1);
 			count++;
 		}
 
 		format++;
 	}
+
+	return (count);
+}
+
+/**
+ * _printf - Custom printf function
+ * @format: The format string
+ * Return: The number of characters printed
+ */
+int _printf(const char *format, ...)
+{
+	va_list args;
+	int count;
+
+	va_start(args, format);
+
+	count = count_format(format);
 
 	va_end(args);
 
