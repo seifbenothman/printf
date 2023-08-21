@@ -38,7 +38,7 @@ int print_string(char *str)
  */
 int count_format(const char *format)
 {
-	va_list args
+	va_list args; // Add missing semicolon here
 	va_start(args, format);
 	int count = 0;
 
@@ -49,24 +49,29 @@ int count_format(const char *format)
 			format++;
 			switch (*format)
 			{
-			case 'c':
-			count++;
-			break;
+				case 'c':
+				/* Print a character */
+				count++;
+				break;
 
-			case 's':
-			count += print_string(va_arg(args, char *));
-			break;
+				case 's':
+				/* Print a string */
+				count += print_string(va_arg(args, char *));
+				break;
 
-			case '%':
-			count++;
-			break;
+				case '%':
+				/* Print a '%' character */
+				count++;
+				break;
 
-			default:
-			break;
+				default:
+				/* Ignore unsupported format specifiers */
+				break;
 			}
 		}
 		else
 		{
+			/* Print ordinary characters */
 			count++;
 		}
 
