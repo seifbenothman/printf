@@ -4,6 +4,20 @@
 #include "functions.h"
 
 /**
+ * print_number - Print a positive integer to the standard output
+ * @n: The integer to be printed
+ * Return: The number of characters printed
+ */
+int print_number(unsigned int n)
+{
+	int count = 0;
+	if (n / 10)
+		count += print_number(n / 10);
+	count += print_char(n % 10 + '0');
+	return (count);
+}
+
+/**
  * print_char - Print a character to the standard output
  * @c: The character to be printed
  * Return: The number of characters printed
@@ -36,7 +50,7 @@ int print_string(const char *str)
  * @format: The format string
  * Return: The number of characters to be printed
  */
-int count_format(const char *format)
+int count_format(const char *format, va_list args)
 {
 	int count = 0;
 
@@ -46,6 +60,17 @@ int count_format(const char *format)
 		{
 			switch (*format++)
 			{
+			case 'd':
+			case 'i':
+			{
+			int num = va_arg(args, int);
+			if (num < 0) {
+			count += print_char('-');
+			num = -num;
+			}
+			count += print_number(num);
+			}
+			break;
 			case 'c':
 			case '%':
 			count++;

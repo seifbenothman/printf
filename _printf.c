@@ -12,7 +12,7 @@ int _printf(const char *format, ...)
 	int count;
 
 	va_start(args, format);
-	count = count_format(format);
+	count = count_format(format, args);
 	va_end(args);
 
 	return (count);

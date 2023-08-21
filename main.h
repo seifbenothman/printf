@@ -9,5 +9,6 @@ int print_char(char c);
 int print_string(const char *str);
 int _printf(const char *format, ...);
 int count_format(const char *format);
+int print_number(unsigned int n);
 
 #endif
