@@ -1,6 +1,6 @@
-#include <unistd.h>
+#include <unistd.h> // Include this for write function
 #include <stdio.h>
-#include <stdrag.h>
+#include <stdarg.h> // Include this for va_list and va_start
 #include "main.h"
 
 /**
@@ -38,6 +38,8 @@ int print_string(char *str)
  */
 int count_format(const char *format)
 {
+	va_list args
+	va_start(args, format);
 	int count = 0;
 
 	while (*format)
@@ -76,5 +78,6 @@ int count_format(const char *format)
 		format++;
 	}
 
+	va_end(args);
 	return (count);
 }
