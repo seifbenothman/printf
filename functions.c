@@ -18,7 +18,7 @@ int print_char(char c)
  * @str: The string to be printed
  * Return: The number of characters printed
  */
-int print_string(char *str)
+int print_string(const char *str)
 {
 	int count = 0;
 
@@ -44,24 +44,24 @@ int count_format(const char *format)
 	{
 		if (*format++ == '%')
 		{
-		switch (*format++)
-		{
-		case 'c':
-		case '%':
-		count++;
-		break;
-		case 's':
-		count += print_string(format);
-		while (*format && (*format == 'c' || *format == 's' || *format == '%'))
-		{
-		format++;
-		count++;
-		}
-		format--;
-		break;
-		default:
-		break;
-		}
+			switch (*format++)
+			{
+			case 'c':
+			case '%':
+			count++;
+			break;
+			case 's':
+			count += print_string((char *)format);
+			while (*format && (*format == 'c' || *format == 's' || *format == '%'))
+			{
+			format++;
+			count++;
+			}
+			format--;
+			break;
+			default:
+			break;
+			}
 		}
 		else
 		{

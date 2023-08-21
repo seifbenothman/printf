@@ -6,7 +6,7 @@
 #include <stdarg.h>
 
 int print_char(char c);
-int print_string(char *str);
+int print_string(const char *str);
 int _printf(const char *format, ...);
 int count_format(const char *format);
 
