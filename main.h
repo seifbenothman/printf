@@ -8,4 +8,4 @@ int print_char(char c);
 int print_string(char *str);
 int count(const char *format);
 
-#endif /* PRINTF_H */
+#endif

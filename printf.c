@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdrag.h>
-#include "printf.h"
+#include "main.h"
 
 /**
  * print_char - Print a character to the standard output
