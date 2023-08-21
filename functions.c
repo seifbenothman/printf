@@ -1,6 +1,6 @@
-#include <unistd.h> // Include this for write function
+#include <unistd.h>
 #include <stdio.h>
-#include <stdarg.h> // Include this for va_list and va_start
+#include <stdarg.h>
 #include "main.h"
 
 /**
@@ -50,28 +50,23 @@ int count_format(const char *format)
 			switch (*format)
 			{
 			case 'c':
-			/* Print a character */
 			count++;
 			break;
 
 			case 's':
-			/* Print a string */
 			count += print_string(va_arg(args, char *));
 			break;
 
 			case '%':
-			/* Print a '%' character */
 			count++;
 			break;
 
 			default:
-			/* Ignore unsupported format specifiers */
 			break;
 			}
 		}
 		else
 		{
-			/* Print ordinary characters */
 			count++;
 		}
 
