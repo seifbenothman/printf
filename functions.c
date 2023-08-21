@@ -30,3 +30,44 @@ int print_string(char *str)
 
 	return (count);
 }
+
+/**
+ * count_format - Count the number of characters to be printed for a format
+ * @format: The format string
+ * Return: The number of characters to be printed
+ */
+int count_format(const char *format)
+{
+	int count = 0;
+
+	while (*format)
+	{
+		if (*format++ == '%')
+		{
+		switch (*format++)
+		{
+		case 'c':
+		case '%':
+		count++;
+		break;
+		case 's':
+		count += print_string(format);
+		while (*format && (*format == 'c' || *format == 's' || *format == '%'))
+		{
+		format++;
+		count++;
+		}
+		format--;
+		break;
+		default:
+		break;
+		}
+		}
+		else
+		{
+			count++;
+		}
+	}
+
+	return (count);
+}
