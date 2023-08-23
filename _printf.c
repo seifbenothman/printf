@@ -1,6 +1,7 @@
 #include <stdarg.h>
 #include <limits.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "main.h"
 #include "functions.h"
 
