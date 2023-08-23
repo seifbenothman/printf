@@ -45,7 +45,7 @@ int handle_specifier(char specifier, va_list args)
 		char c = (char) va_arg(args, int);
 		count += write_output(&c);
 	}
-       	else if (specifier == 's')
+	else if (specifier == 's')
 	{
 		char *str = va_arg(args, char *);
 		if (str == NULL)
