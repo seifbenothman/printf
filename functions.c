@@ -12,6 +12,7 @@
 int str_len(char *str)
 {
 	int len = 0;
+
 	while (str[len] != '\0')
 	{
 		len++;
@@ -44,11 +45,13 @@ int handle_specifier(char specifier, va_list args)
 	if (specifier == 'c')
 	{
 		char c = (char) va_arg(args, int);
+
 		count += write_output(&c);
 	}
 	else if (specifier == 's')
 	{
 		char *str = va_arg(args, char *);
+
 		if (str == NULL)
 			str = "(null)";
 		count += write_output(str);
@@ -56,7 +59,9 @@ int handle_specifier(char specifier, va_list args)
 	else if (specifier == 'i' || specifier == 'd')
 	{
 		char buffer[20];
+
 		int n = snprintf(buffer, sizeof(buffer), "%d", va_arg(args, int));
+
 		if (n > 0)
 		{
 			count += write_output(buffer);
@@ -66,6 +71,7 @@ int handle_specifier(char specifier, va_list args)
 	{
 		write(1, "%", 1);
 		char c = specifier;
+
 		count += write_output(&c);
 	}
 
@@ -81,6 +87,7 @@ int handle_specifier(char specifier, va_list args)
 int _printf(const char *format, ...)
 {
 	int count = 0;
+
 	va_list args;
 
 	va_start(args, format);
@@ -94,11 +101,13 @@ int _printf(const char *format, ...)
 		{
 			format++;
 			char specifier = *format;
+
 			count += handle_specifier(specifier, args);
 		}
 		else
 		{
 			char temp[2];
+
 			temp[0] = *format;
 			temp[1] = '\0';
 			count += write_output(temp);

@@ -24,11 +24,13 @@ int _printf(const char *format, ...)
 		{
 			format++;
 			char specifier = *format;
+
 			count += handle_specifier(specifier, args);
 		}
 		else
 		{
 			char temp[2];
+
 			temp[0] = *format;
 			temp[1] = '\0';
 			count += write_output(temp);
