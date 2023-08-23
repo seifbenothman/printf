@@ -41,10 +41,11 @@ int write_output(char *str)
 int handle_specifier(char specifier, va_list args)
 {
 	int count = 0;
+	char c;
 
 	if (specifier == 'c')
 	{
-		char c = (char) va_arg(args, int);
+		c = (char) va_arg(args, int);
 
 		count += write_output(&c);
 	}
@@ -70,7 +71,6 @@ int handle_specifier(char specifier, va_list args)
 	else
 	{
 		write(1, "%", 1);
-		char c = specifier;
 
 		count += write_output(&c);
 	}
