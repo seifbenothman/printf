@@ -5,116 +5,66 @@
 #include <stdarg.h>
 
 /**
- * str_len - Calculate the length of a string.
- * @str: The input string.
- * Return: The length of the string.
+ * _printf - Custom printf function that calculates the number
+ * of characters to be printed.
+ * @format: The format string.
+ * Return: The number of characters to be printed.
  */
-int str_len(char *str)
+int _printf(const char *format, ...)
 {
-	int len = 0;
+	va_list args;
+	int count;
 
-	while (str[len] != '\0')
-	{
-		len++;
-	}
-
-	return (len);
-}
-
-/**
- * write_output - Write a string to the standard output and return the number
- * @str: The string to be written.
- * Return: The number of characters written.
- */
-int write_output(char *str)
-{
-	int len = str_len(str);
-
-	return (write(1, str, len));
-}
-
-/**
- * handle_specifier - Handle different format specifiers
- * @specifier: The format specifier character.
- * @args: The va_list of arguments.
- * Return: The number of characters written.
- */
-int handle_specifier(char specifier, va_list args)
-{
-	int count = 0;
-
-	if (specifier == 'c')
-	{
-		char c = (char)va_arg(args, int);
-
-		count += write_output(&c);
-	}
-	else if (specifier == 's')
-	{
-
-		char *str = va_arg(args, char *);
-
-		if (str == NULL)
-
-			str = "(null)";
-		count += write_output(str);
-	}
-	else if (specifier == 'i' || specifier == 'd')
-	{
-		char buffer[20];
-		int n = snprintf(buffer, sizeof(buffer), "%d", va_arg(args, int));
-
-		if (n > 0)
-		{
-			count += write_output(buffer);
-		}
-	}
-	else
-	{
-		char c = specifier;
-		char temp[2] = {c, '\0'};
-
-		count += write_output(temp);
-	}
+	va_start(args, format);
+	count = count_format(format, args);
+	va_end(args);
 
 	return (count);
 }
 
 /**
- * _printf - A printf-like function for formatted output.
+ * count_format - Counts the number of characters to be printed
+ * based on the format string and arguments.
  * @format: The format string.
- * @...: Additional arguments corresponding to format specifiers.
- * Return: The total number of characters written.
+ * @args: The variable argument list.
+ * Return: The number of characters to be printed.
  */
-int _printf(const char *format, ...)
+int count_format(const char format, va_list args)
 {
 	int count = 0;
-	va_list args;
+	const char *ptr = format;
 
-	va_start(args, format);
-
-	if (format == NULL)
-		return (-1);
-
-	while (*format)
+	while (*ptr != '\0')
 	{
-		if (*format == '%')
+		if (*ptr != '%')
 		{
-			format++;
-			char specifier = *format;
-
-			count += handle_specifier(specifier, args);
+			count++;
+			ptr++;
 		}
 		else
 		{
-			char temp[2] = {*format, '\0'};
+			ptr++;
+			if (*ptr == 's')
+			{
+				const char *str = va_arg(args, const char *);
 
-			count += write_output(temp);
+				count += print_string(str);
+			}
+			else if (*ptr == 'd')
+			{
+				int num = va_arg(args, int);
+
+				count += print_number(num);
+			}
+			else if (*ptr == 'c')
+			{
+				char ch = (char)va_arg(args, int);
+
+				count += print_char(ch);
+			}
+			ptr++;
 		}
-		format++;
 	}
-
-	va_end(args);
 
 	return (count);
 }
