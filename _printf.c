@@ -11,7 +11,8 @@
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int count = 0;
+
+	char specifier;
 
 	va_start(args, format);
 
@@ -23,9 +24,7 @@ int _printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			char specifier = *format;
-
-			count += handle_specifier(specifier, args);
+			specifier = *format;
 		}
 		else
 		{
@@ -33,12 +32,10 @@ int _printf(const char *format, ...)
 
 			temp[0] = *format;
 			temp[1] = '\0';
-			count += write_output(temp);
 		}
 		format++;
 	}
 
 	va_end(args);
-
 	return (count);
 }
