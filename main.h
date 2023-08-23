@@ -5,10 +5,9 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-int print_char(char c);
-int print_string(const char *str);
+int str_len(char *str);
+int write_output(char *str);
+int handle_specifier(char specifier, va_list args);
 int _printf(const char *format, ...);
-int count_format(const char *format);
-int print_number(unsigned int n);
 
 #endif

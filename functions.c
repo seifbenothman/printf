@@ -12,26 +12,29 @@
 int str_len(char *str)
 {
 	int len = 0;
+
 	while (str[len] != '\0')
 	{
 		len++;
 	}
+
 	return (len);
 }
 
 /**
- * write_output - Write a string to the standard output and return the number of characters written.
+ * write_output - Write a string to the standard output and return the number
  * @str: The string to be written.
  * Return: The number of characters written.
  */
 int write_output(char *str)
 {
 	int len = str_len(str);
+
 	return (write(1, str, len));
 }
 
 /**
- * handle_specifier - Handle different format specifiers and write formatted output.
+ * handle_specifier - Handle different format specifiers
  * @specifier: The format specifier character.
  * @args: The va_list of arguments.
  * Return: The number of characters written.
@@ -42,29 +45,36 @@ int handle_specifier(char specifier, va_list args)
 
 	if (specifier == 'c')
 	{
-		char c = (char) va_arg(args, int);
+		char c = (char)va_arg(args, int);
+
 		count += write_output(&c);
 	}
 	else if (specifier == 's')
 	{
+
 		char *str = va_arg(args, char *);
+
 		if (str == NULL)
+
 			str = "(null)";
 		count += write_output(str);
 	}
-	 else if (specifier == 'i' || specifier == 'd')
+	else if (specifier == 'i' || specifier == 'd')
 	{
 		char buffer[20];
 		int n = snprintf(buffer, sizeof(buffer), "%d", va_arg(args, int));
+
 		if (n > 0)
 		{
 			count += write_output(buffer);
 		}
-	} else
+	}
+	else
 	{
-		write(1, "%", 1);
 		char c = specifier;
-		count += write_output(&c);
+		char temp[2] = {c, '\0'};
+
+		count += write_output(temp);
 	}
 
 	return (count);
@@ -77,7 +87,7 @@ int handle_specifier(char specifier, va_list args)
  * Return: The total number of characters written.
  */
 int _printf(const char *format, ...)
-	{
+{
 	int count = 0;
 	va_list args;
 
@@ -92,10 +102,13 @@ int _printf(const char *format, ...)
 		{
 			format++;
 			char specifier = *format;
+
 			count += handle_specifier(specifier, args);
-		} else
+		}
+		else
 		{
 			char temp[2] = {*format, '\0'};
+
 			count += write_output(temp);
 		}
 		format++;
