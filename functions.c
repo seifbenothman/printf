@@ -20,18 +20,19 @@ int str_len(char *str)
 }
 
 /**
- * write_output - Write a string to the standard output and return the number of characters written.
+ * write_output - Write a string to the standard output
  * @str: The string to be written.
  * Return: The number of characters written.
  */
 int write_output(char *str)
 {
 	int len = str_len(str);
+
 	return (write(1, str, len));
 }
 
 /**
- * handle_specifier - Handle different format specifiers and write formatted output.
+ * handle_specifier - Handle different format specifiers
  * @specifier: The format specifier character.
  * @args: The va_list of arguments.
  * Return: The number of characters written.

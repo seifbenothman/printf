@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include "functions.h"
+
 int str_len(char *str);
 int write_output(char *str);
 int handle_specifier(char specifier, va_list args);
